@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, TextInput, Button, StyleSheet, SafeAreaView, View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
+import { Alert, TextInput, Button, StyleSheet, SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -154,14 +154,35 @@ const PayScreen = () => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const KitchenUIScreen: React.FC = () => {
+  const data = [
+    { id: 1, name: 'Orders per table' },
+    { id: 2, name: 'Current orders to prepare' },
+    { id: 3, name: 'Done' },
+  ];
+
+  const renderGrid = () => {
+    const items = data.map((item, index) => (
+      <View key={item.id} style={styles.itemContainerKitchen}>
+        <Text style={styles.imageText}>{item.name}</Text>
+      </View>
+    ));
+
+    return (
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+        {items}
+      </View>
+    );
+  };
+
   return (
-    <View style={styles.categoryContainer}>
-      <Image source={require('./assets/images/bill.png')} style={styles.image} />
-      <Text>Category 2 Text</Text>
+    <View style={[styles.container, { justifyContent: 'center' }]}>
+      {renderGrid()}
     </View>
   );
 };
 
+
+////////////////////////////////////////////////////////////////////////////////////////////
 const iconImages = {
   Drinks: require('./assets/images/drink.png'),
   Food: require('./assets/images/food.png'),
@@ -365,6 +386,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
   },
+  itemContainerKitchen: {
+    backgroundColor: '#333',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 10,
+    padding: 20,
+    borderRadius: 10,
+    width: 600
+  }
 });
 
 export default App;
