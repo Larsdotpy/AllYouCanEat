@@ -70,7 +70,6 @@ const Drinks = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Drinks</Text>
       <FlatList
         contentContainerStyle={styles.listContainer}
         data={drinksData}
@@ -87,18 +86,22 @@ const SPACING = 10; // Set your desired spacing value
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#171717',
+    backgroundColor: '#fff',
+    justifyContent: 'center', // Vertically center content
+    alignItems: 'center', // Center content horizontally
   },
   text: {
-    color: 'white',
+    color: '#171717',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 30,
     marginBottom: 20,
   },
   listContainer: {
-    alignItems: 'center',
+    flexGrow: 1,
+    width: '100%',
     paddingHorizontal: SPACING,
+    justifyContent: 'center',
   },
   itemContainer: {
     alignItems: 'center',
@@ -115,7 +118,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: 'white',
+    color: '#171717',
   },
   quantityControls: {
     flexDirection: 'row',
@@ -123,12 +126,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   controlButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: '#171717',
     borderRadius: 4,
     padding: 5,
   },
   controlText: {
-    color: 'white',
+    color: '#171717',
     fontSize: 20,
     marginLeft: 5,
     marginRight: 5,

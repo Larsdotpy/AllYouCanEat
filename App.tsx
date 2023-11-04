@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, TextInput, Button, StyleSheet, SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -21,8 +21,8 @@ const FoodScreen: React.FC = () => {
     { id: 2, name: 'Nigiri', image: require('./assets/images/nigiri.png') },
     { id: 3, name: 'Temaki', image: require('./assets/images/temaki.png') },
     { id: 4, name: 'Tempura', image: require('./assets/images/tempura.png') },
-    { id: 5, name: 'Ice-Cream', image: require('./assets/images/ice-cream.png') },
-    { id: 6, name: 'xxx', image: require('./assets/images/kitchen.png') },
+    { id: 5, name: 'Gunkan', image: require('./assets/images/gunkan.png') },
+    { id: 6, name: 'Pokebowl', image: require('./assets/images/pokebowl.png') },
   ];
 
   const renderGrid = () => {
@@ -50,21 +50,42 @@ const FoodScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Category 2</Text>
       {renderGrid()}
     </View>
   );
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const MyOrderScreen: React.FC = () => {
+const OrdersScreen: React.FC = () => {
+
+  const OrderItem: React.FC<{ orderDetails: string }> = ({ orderDetails }) => {
+    return (
+      <View style={styles.orderItem}>
+        <Text>{orderDetails}</Text>
+        {/* You can add more details or components to display for each order */}
+      </View>
+    );
+  };
+
+  
+  // Assuming orders data is available in an array (replace this with your actual data)
+  const orders = [
+    "Order 1 details",
+    "Order 2 details",
+    "Order 3 details",
+    // Add more orders or retrieve from your data source
+  ];
+
   return (
-    <View style={styles.categoryContainer}>
-      <Image source={require('./assets/images/bill.png')} style={styles.image} />
-      <Text>Category 2 Text</Text>
+    <View style={styles.ordersContainer}>
+      <Text style={styles.screenTitle}>Orders Made in Current Round</Text>
+      {orders.map((order, index) => (
+        <OrderItem key={index} orderDetails={order} />
+      ))}
     </View>
   );
 };
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const PayScreen = () => {
@@ -73,10 +94,14 @@ const PayScreen = () => {
     { id: 1, itemName: '4 person dinner', amount: 1, price: 95 },
     { id: 2, itemName: 'Large water', amount: 1, price: 8 },
     { id: 3, itemName: 'Beer 50cl.', amount: 1, price: 3 },
-    { id: 4, itemName: 'Mojito', amount: 1, price: 13 },
+    { id: 4, itemName: 'Mojito', amount: 2, price: 13 },
     { id: 5, itemName: 'Ice Tea', amount: 1, price: 3 },
     { id: 6, itemName: 'Wine', amount: 1, price: 15 },
-    // Add more items as needed
+    { id: 7, itemName: 'Beer 150cl.', amount: 1, price: 6 },
+    { id: 8, itemName: 'Calpis Soda', amount: 1, price: 4 },
+    { id: 9, itemName: 'Sprite', amount: 1, price: 4 },
+    { id: 10, itemName: 'Orange Juice', amount: 1, price: 3.50 },
+    { id: 11, itemName: 'Sake', amount: 1, price: 6 },
   ];
 
   const renderItem = ({ item }) => (
@@ -153,18 +178,26 @@ const PayScreen = () => {
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const KitchenUIScreen: React.FC = () => {
+const KitchenUIScreen = ({ navigation }) => {
   const data = [
-    { id: 1, name: 'Orders per table' },
-    { id: 2, name: 'Current orders to prepare' },
-    { id: 3, name: 'Done' },
+    { id: 1, name: 'Orders per table', screenName: 'OrdersPerTableScreen' },
+    { id: 2, name: 'Current orders to prepare', screenName: 'CurrentOrdersToPrepareScreen' },
+    { id: 3, name: 'Prepared orders', screenName: 'PreparedOrdersScreen' },
   ];
+
+  const handleItemPress = (screenName) => {
+    navigation.navigate(screenName);
+  };
 
   const renderGrid = () => {
     const items = data.map((item, index) => (
-      <View key={item.id} style={styles.itemContainerKitchen}>
+      <TouchableOpacity
+        key={item.id}
+        style={styles.itemContainerKitchen}
+        onPress={() => handleItemPress(item.screenName)}
+      >
         <Text style={styles.imageText}>{item.name}</Text>
-      </View>
+      </TouchableOpacity>
     ));
 
     return (
@@ -193,6 +226,7 @@ const iconImages = {
 const defaultIcon = require('./assets/images/mainlogo.png');
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+////////////////////////////////////////////////////////////////////////////////////////////
 
 const HomeTabs: React.FC = () => {
   return (
@@ -213,12 +247,13 @@ const HomeTabs: React.FC = () => {
     >
       <Tab.Screen name="Drinks" component={Drinks} />
       <Tab.Screen name="Food" component={FoodScreen} />
-      <Tab.Screen name="My order" component={MyOrderScreen} />
+      <Tab.Screen name="My order" component={OrdersScreen} />
       <Tab.Screen name="Pay" component={PayScreen} />
       <Tab.Screen name="Kitchen UI" component={KitchenUIScreen} />
     </Tab.Navigator>
   );
 };
+////////////////////////////////////////////////////////////////////////////////////////////
 
 const StartScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [inputText, setInputText] = useState('');
@@ -239,10 +274,120 @@ const StartScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           value={inputText}
           onChangeText={(text) => setInputText(text)}
           placeholder="Enter text here"
-          secureTextEntry // Mask the input for passwords
+          secureTextEntry
         />
         <Button title="Start" onPress={handleButtonPress} />
       </View>
+    </SafeAreaView>
+  );
+};
+////////////////////////////////////////////////////////////////////////////////////////////
+
+const OrdersPerTableScreen = ({ navigation }) => {
+  // Assuming you have an array of orders for different tables
+  const [orders, setOrders] = useState([]);
+
+  // Function to fetch orders for a specific table from an API or database
+  const fetchOrdersForTable = (tableNumber) => {
+    // Fetch orders based on the table number and set the state
+    // This is a hypothetical function, you should replace it with your data fetching logic
+    // For example:
+    // const ordersData = await fetchOrdersFromDatabase(tableNumber);
+    // setOrders(ordersData);
+  };
+
+  useEffect(() => {
+    // Fetch orders for a default table (e.g., table 1) when the component mounts
+    fetchOrdersForTable(1);
+  }, []);
+
+  // Render individual order items
+  const renderOrderItem = ({ item }) => {
+    return (
+      <View style={styles.orderItemPerTable}>
+        <Text>{item.orderName}</Text>
+        <Text>{item.orderDetails}</Text>
+      </View>
+    );
+  };
+
+  return (
+    <SafeAreaView style={styles.containerPerTable}>
+      <FlatList
+        data={orders}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={renderOrderItem}
+      />
+    </SafeAreaView>
+  );
+};
+////////////////////////////////////////////////////////////////////////////////////////////
+const CurrentOrdersToPrepareItem = ({ orderType, amount, table }) => {
+  return (
+    <View style={styles.itemPreparedOrdersScreen}>
+      <Text style={styles.columnPreparedOrdersScreen}>{orderType}</Text>
+      <Text style={styles.columnPreparedOrdersScreen}>{amount}</Text>
+      <Text style={styles.columnPreparedOrdersScreen}>{table}</Text>
+    </View>
+  );
+};
+
+const CurrentOrdersToPrepareScreen = () => {
+  const ordersData = [
+    { orderType: 'Salmon Maki', amount: '3', table: 'Table 1' },
+    { orderType: 'Tuna Nigiri', amount: '7', table: 'Table 4' },
+    { orderType: 'Corn Gunkan', amount: '2', table: 'Table 2' },
+    // Add more order data as needed
+  ];
+
+  return (
+    <SafeAreaView style={styles.containerPreparedOrdersScreen}>
+      <FlatList
+        data={ordersData}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <CurrentOrdersToPrepareItem
+            orderType={item.orderType}
+            amount={item.amount}
+            table={item.table}
+          />
+        )}
+      />
+    </SafeAreaView>
+  );
+};
+////////////////////////////////////////////////////////////////////////////////////////////
+const PreparedOrderItem = ({ orderType, amount, table }) => {
+  return (
+    <View style={styles.itemPreparedOrdersScreen}>
+      <Text style={styles.columnPreparedOrdersScreen}>{orderType}</Text>
+      <Text style={styles.columnPreparedOrdersScreen}>{amount}</Text>
+      <Text style={styles.columnPreparedOrdersScreen}>{table}</Text>
+    </View>
+  );
+};
+
+const PreparedOrdersScreen = () => {
+  const ordersData = [
+    { orderType: 'Salmon Maki', amount: '3', table: 'Table 1' },
+    { orderType: 'Tuna Nigiri', amount: '7', table: 'Table 4' },
+    { orderType: 'Corn Gunkan', amount: '2', table: 'Table 2' },
+    // Add more order data as needed
+  ];
+
+  return (
+    <SafeAreaView style={styles.containerPreparedOrdersScreen}>
+      <FlatList
+        data={ordersData}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <PreparedOrderItem
+            orderType={item.orderType}
+            amount={item.amount}
+            table={item.table}
+          />
+        )}
+      />
     </SafeAreaView>
   );
 };
@@ -251,8 +396,11 @@ const App: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Start">
-        <Stack.Screen name="Start" component={StartScreen} options={{ title: 'Start' }} />
-        <Stack.Screen name="Home" component={HomeTabs} options={{ title: 'Home' }} />
+        <Stack.Screen name="Start" component={StartScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Home" component={HomeTabs} options={{ headerShown: false }} />
+        <Stack.Screen name="OrdersPerTableScreen" component={OrdersPerTableScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="CurrentOrdersToPrepareScreen" component={CurrentOrdersToPrepareScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="PreparedOrdersScreen" component={PreparedOrdersScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -322,6 +470,26 @@ const styles = StyleSheet.create({
     width: '80%',
     height: 100,
     marginBottom: 10,
+  },
+  ordersContainer: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#ffffff',
+  },
+  screenTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  orderItem: {
+    borderWidth: 1,
+    borderColor: '#cccccc',
+    borderRadius: 8,
+    padding: 15,
+    marginBottom: 10,
+  },
+  orderDetails: {
+    fontSize: 16,
   },
   totalContainer: {
     flexDirection: 'row',
@@ -394,7 +562,33 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     width: 600
-  }
+  },
+  containerPreparedOrdersScreen: {
+    flex: 1,
+    marginTop: 20,
+    marginHorizontal: 10,
+  },
+  itemPreparedOrdersScreen: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  columnPreparedOrdersScreen: {
+    flex: 1,
+    textAlign: 'center',
+  },
+  containerPerTable: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  orderItemPerTable: {
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
 });
 
 export default App;
