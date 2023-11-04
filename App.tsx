@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Alert, TextInput, Button, StyleSheet, SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import Drinks from './screens/Drinks';
 import FoodScreen from './screens/FoodScreen';
 import OrdersScreen from './screens/OrderScreen';
@@ -18,10 +17,10 @@ const HomeTabs: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.bar}>
-        <Text style={styles.barText}>Table Nr.</Text>
-        <Text style={styles.barText}>Round Nr.</Text>
-        <Text style={styles.barText}>TotalItem Nr.</Text>
-        <Text style={styles.barText}>Time</Text>
+        <Text style={styles.barText}>Table 3</Text>
+        <Text style={styles.barText}>Round 2/5</Text>
+        <Text style={styles.barText}>12/20 </Text>
+        <Text style={styles.barText}>43:30</Text>
       </View>
 
       <View style={styles.content}>
@@ -43,27 +42,27 @@ const HomeTabs: React.FC = () => {
           <Tab.Screen
             name="Drinks"
             component={Drinks}
-            options={{ headerShown: false }} // Hide header for this screen
+            options={{ headerShown: false }}
           />
           <Tab.Screen
             name="Food"
             component={FoodScreen}
-            options={{ headerShown: false }} // Hide header for this screen
+            options={{ headerShown: false }}
           />
           <Tab.Screen
             name="My order"
             component={OrdersScreen}
-            options={{ headerShown: false }} // Hide header for this screen
+            options={{ headerShown: false }}
           />
           <Tab.Screen
             name="Pay"
             component={PayScreen}
-            options={{ headerShown: false }} // Hide header for this screen
+            options={{ headerShown: false }}
           />
           <Tab.Screen
             name="Kitchen UI"
             component={KitchenUIScreen}
-            options={{ headerShown: false }} // Hide header for this screen
+            options={{ headerShown: false }}
           />
         </Tab.Navigator>
       </View>
@@ -102,13 +101,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingBottom: 5,
-    backgroundColor: '#eee',
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: 'black',
   },
   barText: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    flex: 1,
+    textAlign: 'center',
   },
   content: {
     flex: 1,
