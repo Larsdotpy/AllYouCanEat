@@ -24,7 +24,6 @@ const drinksData = [
   { id: 9, name: 'Wine', image: drink9 },
 
 
-  // Add more drink items as needed
 ];
 
 const Drinks = () => {
