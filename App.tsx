@@ -16,29 +16,61 @@ import { iconImages, defaultIcon, Tab, Stack } from './utils/Utilities';
 
 const HomeTabs: React.FC = () => {
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: () => {
-          const iconName = route.name in iconImages ? iconImages[route.name] : null;
+    <View style={styles.container}>
+      <View style={styles.bar}>
+        <Text style={styles.barText}>Table Nr.</Text>
+        <Text style={styles.barText}>Round Nr.</Text>
+        <Text style={styles.barText}>TotalItem Nr.</Text>
+        <Text style={styles.barText}>Time</Text>
+      </View>
 
-          return <Image source={iconName ? iconName : defaultIcon} style={styles.tabIcon} />;
-        },
-        tabBarStyle: {
-          height: 120,
-        },
-        tabBarLabelStyle: {
-          fontSize: 13,
-        },
-      })}
-    >
-      <Tab.Screen name="Drinks" component={Drinks} />
-      <Tab.Screen name="Food" component={FoodScreen} />
-      <Tab.Screen name="My order" component={OrdersScreen} />
-      <Tab.Screen name="Pay" component={PayScreen} />
-      <Tab.Screen name="Kitchen UI" component={KitchenUIScreen} />
-    </Tab.Navigator>
+      <View style={styles.content}>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: () => {
+              const iconName = route.name in iconImages ? iconImages[route.name] : null;
+
+              return <Image source={iconName ? iconName : defaultIcon} style={styles.tabIcon} />;
+            },
+            tabBarStyle: {
+              height: 120,
+            },
+            tabBarLabelStyle: {
+              fontSize: 13,
+            }
+          })}
+        >
+          <Tab.Screen
+            name="Drinks"
+            component={Drinks}
+            options={{ headerShown: false }} // Hide header for this screen
+          />
+          <Tab.Screen
+            name="Food"
+            component={FoodScreen}
+            options={{ headerShown: false }} // Hide header for this screen
+          />
+          <Tab.Screen
+            name="My order"
+            component={OrdersScreen}
+            options={{ headerShown: false }} // Hide header for this screen
+          />
+          <Tab.Screen
+            name="Pay"
+            component={PayScreen}
+            options={{ headerShown: false }} // Hide header for this screen
+          />
+          <Tab.Screen
+            name="Kitchen UI"
+            component={KitchenUIScreen}
+            options={{ headerShown: false }} // Hide header for this screen
+          />
+        </Tab.Navigator>
+      </View>
+    </View>
   );
 };
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -61,7 +93,27 @@ const styles = StyleSheet.create({
   tabIcon: {
     width: 50, // Customize the width as needed
     height: 50, // Customize the height as needed
-  }
+  },
+  container: {
+    flex: 1,
+    paddingTop: 50, // Adjust the value to create space between the top of the screen and the bar
+  },
+  bar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingBottom: 5,
+    backgroundColor: '#eee',
+  },
+  barText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  content: {
+    flex: 1,
+    paddingTop: 10, // Adjust the value to create space between the bar and the content below
+  },
 });
 
 export default App;
