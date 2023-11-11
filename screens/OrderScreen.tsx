@@ -1,15 +1,22 @@
-import { FlatList, View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { useState } from "react";
+import { FlatList, View, StyleSheet, TouchableOpacity, Text, Alert } from "react-native";
 
-const OrdersScreen = () => {
+interface OrdersScreenProps {
+  updateRound: (prevRound: number) => number;
+}
 
-    const OrderItem = ({ orderDetails }) => {
-      return (
-        <View style={styles.orderItem}>
-          <Text>{orderDetails}</Text>
-          {/* You can add more details or components to display for each order */}
-        </View>
-      );
-    };
+const OrdersScreen: React.FC<OrdersScreenProps> = ({ updateRound }) => {
+  const [currentRound, setCurrentRound] = useState<number>(1);
+  const [orderPlacedInRound5, setOrderPlacedInRound5] = useState<boolean>(false);
+  
+  const OrderItem: React.FC<{ orderDetails: string }> = ({ orderDetails }) => {
+    return (
+      <View style={styles.orderItem}>
+        <Text>{orderDetails}</Text>
+        {/* You can add more details or components to display for each order */}
+      </View>
+    );
+  };
   
     const orders = [
       "Order 1 details",
@@ -31,9 +38,48 @@ const OrdersScreen = () => {
     ];
   
     const placeOrderHandler = () => {
-      // Functionality to handle placing an order
-      // Add your logic here
-      console.log('Placing the order...');
+      if (currentRound < 5 || (currentRound === 5 && !orderPlacedInRound5)) {
+        // Show a confirmation dialog before placing the order
+        Alert.alert(
+          'Confirmation',
+          'Are you sure you want to place the order?',
+          [
+            {
+              text: 'No',
+              style: 'cancel',
+            },
+            {
+              text: 'Yes',
+              onPress: () => {
+                // Functionality to handle placing an order
+                // Add your logic here
+                // ==> stuur order data naar Kafka topic
+                console.log('Placing the order...');
+  
+                // Update the round number (with a maximum of 5)
+                updateRound((prevRound) => {
+                  console.log('Previous Round:', prevRound);
+                  const newRound = prevRound < 5 ? prevRound + 1 : 5;
+                  console.log('New Round:', newRound);
+                  setCurrentRound(newRound);
+  
+                  if (newRound === 5) {
+                    setOrderPlacedInRound5(true);
+                  }
+  
+                  return newRound;
+                });
+              },
+            },
+          ],
+          { cancelable: false }
+        );
+      } else {
+        Alert.alert(
+          'Round Limit Reached',
+          'You cannot place more orders. Round limit reached or order already placed in round 5.'
+        );
+      }
     };
   
     return (
