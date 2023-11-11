@@ -12,6 +12,12 @@ import OrdersToPrepareScreen from './screens/OrdersToPrepareScreen';
 import PreparedOrdersScreen from './screens/PreparedOrdersScreen';
 import StartScreen from './screens/StartScreen';
 import { iconImages, defaultIcon, Tab, Stack } from './utils/Utilities';
+import MakiScreen from './screens/MakiScreen';
+import NigiriScreen from './screens/NigiriScreen';
+import TemakiScreen from './screens/TemakiScreen';
+import TempuraScreen from './screens/TempuraScreen';
+import GunkanScreen from './screens/GunkanScreen';
+import PokebowlScreen from './screens/PokebowlScreen';
 
 const HomeTabs: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [timer, setTimer] = useState(2 * 60 * 60); // Initial value is 2 hours in seconds
@@ -124,6 +130,12 @@ const App: React.FC = () => {
         <Stack.Screen name="OrdersPerTableScreen" component={OrdersPerTableScreen} options={{ headerShown: false }} />
         <Stack.Screen name="CurrentOrdersToPrepareScreen" component={OrdersToPrepareScreen} options={{ headerShown: false }} />
         <Stack.Screen name="PreparedOrdersScreen" component={PreparedOrdersScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="MakiScreen" component={MakiScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="NigiriScreen" component={NigiriScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="TemakiScreen" component={TemakiScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="TempuraScreen" component={TempuraScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="GunkanScreen" component={GunkanScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="PokebowlScreen" component={PokebowlScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

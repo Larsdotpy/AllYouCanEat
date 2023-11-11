@@ -77,7 +77,7 @@ const OrdersScreen: React.FC<OrdersScreenProps> = ({ updateRound }) => {
       } else {
         Alert.alert(
           'Round Limit Reached',
-          'You cannot place more orders. Round limit reached or order already placed in round 5.'
+          'You cannot place more orders.'
         );
       }
     };

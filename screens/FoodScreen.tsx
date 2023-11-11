@@ -1,37 +1,46 @@
-import { View, Image, Text, StyleSheet } from "react-native";
+import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const FoodScreen: React.FC = () => {
-    const data = [
-      // Your 6 items for the second tab
-      { id: 1, name: 'Maki', image: require('../assets/images/maki.png') },
-      { id: 2, name: 'Nigiri', image: require('../assets/images/nigiri.png') },
-      { id: 3, name: 'Temaki', image: require('../assets/images/temaki.png') },
-      { id: 4, name: 'Tempura', image: require('../assets/images/tempura.png') },
-      { id: 5, name: 'Gunkan', image: require('../assets/images/gunkan.png') },
-      { id: 6, name: 'Pokebowl', image: require('../assets/images/pokebowl.png') },
-    ];
+const FoodScreen: React.FC = ({ navigation }) => {
+  const data = [
+    { id: 1, name: 'Maki', image: require('../assets/images/maki.png'), screenName: 'MakiScreen' },
+    { id: 2, name: 'Nigiri', image: require('../assets/images/nigiri.png'), screenName: 'NigiriScreen' },
+    { id: 3, name: 'Temaki', image: require('../assets/images/temaki.png'), screenName: 'TemakiScreen' },
+    { id: 4, name: 'Tempura', image: require('../assets/images/tempura.png'), screenName: 'TempuraScreen' },
+    { id: 5, name: 'Gunkan', image: require('../assets/images/gunkan.png'), screenName: 'GunkanScreen' },
+    { id: 6, name: 'Pokebowl', image: require('../assets/images/pokebowl.png'), screenName: 'PokebowlScreen' },
+  ];
+
+    const handleItemPress = (screenName) => {
+      navigation.navigate(screenName);
+    };
   
     const renderGrid = () => {
       const items = data.map((item, index) => (
-        <View key={item.id} style={styles.itemContainer}>
+        <TouchableOpacity
+          key={item.id}
+          style={styles.itemContainer}
+          onPress={() => handleItemPress(item.screenName)}
+        >
           <Image source={item.image} style={styles.imageGrid} />
           <Text style={styles.imageText}>{item.name}</Text>
-        </View>
+        </TouchableOpacity>
       ));
   
-      const column1 = items.slice(0, 3); // Items for the first column
-      const column2 = items.slice(3); // Items for the second column
+      const column1 = items.slice(0, 3);
+      const column2 = items.slice(3);
   
       return (
         <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex: 1 }}>
-            {column1}
-          </View>
-          <View style={{ flex: 1 }}>
-            {column2}
-          </View>
+          <View style={{ flex: 1 }}>{column1}</View>
+          <View style={{ flex: 1 }}>{column2}</View>
         </View>
       );
+    };
+  
+    const handlePress = (item: { id: number; name: string; image: any }) => {
+      // Handle press action for the item
+      console.log('Item pressed:', item);
+      // You can navigate to another screen, show details, etc.
     };
   
     return (
