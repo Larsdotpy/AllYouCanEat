@@ -18,19 +18,14 @@ import TemakiScreen from './screens/TemakiScreen';
 import TempuraScreen from './screens/TempuraScreen';
 import GunkanScreen from './screens/GunkanScreen';
 import PokebowlScreen from './screens/PokebowlScreen';
+import Bar from './utils/Bar';
+import { AppProvider } from './utils/AppContext';
+import { useAppContext } from './utils/AppContext';
 
 const HomeTabs: React.FC<{ navigation: any }> = ({ navigation }) => {
-  const [timer, setTimer] = useState(2 * 60 * 60); // Initial value is 2 hours in seconds
+  const { tableNumber, currentRound, timer, setTimer, setCurrentRound } = useAppContext();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [currentRound, setCurrentRound] = useState(1); // Initial value is 1
 
-  // Helper function to format time in HH:MM:SS format
-  const formatTime = (seconds: number): string => {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
-    return `${hours}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
-  };
   
   // Function to decrement the timer every second
   useEffect(() => {
@@ -49,12 +44,7 @@ const HomeTabs: React.FC<{ navigation: any }> = ({ navigation }) => {
   
   return (
     <View style={styles.container}>
-      <View style={styles.bar}>
-        <Text style={styles.barText}>Table 3</Text>
-        <Text style={styles.barText}>{`Round ${currentRound}/5`}</Text>
-        <Text style={styles.barText}>12/20 </Text>
-        <Text style={styles.barText}>{formatTime(timer)}</Text>
-      </View>
+      <Bar tableNumber="3" currentRound={currentRound} timer={timer} />
 
       <Modal isVisible={isModalVisible}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -123,6 +113,7 @@ const HomeTabs: React.FC<{ navigation: any }> = ({ navigation }) => {
 
 const App: React.FC = () => {
   return (
+    <AppProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Start">
         <Stack.Screen name="Start" component={StartScreen} options={{ headerShown: false }} />
@@ -138,6 +129,7 @@ const App: React.FC = () => {
         <Stack.Screen name="PokebowlScreen" component={PokebowlScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
+    </AppProvider>
   );
 
 };

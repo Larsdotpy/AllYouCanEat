@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+import Bar from '../utils/Bar';
+import { useAppContext } from '../utils/AppContext';
 
 const maki1 = require("../assets/images/maki/maki1.jpg");
 const maki2 = require("../assets/images/maki/maki2.jpg");
@@ -27,6 +29,24 @@ const makiData = [
 ];
 
 const MakiScreen = () => {
+  const { tableNumber, currentRound, timer, setTimer, setCurrentRound } = useAppContext();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  // Function to decrement the timer every second
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
+    }, 1000);
+
+    if (timer === 0) {
+      console.log('Timer has reached zero');
+      setIsModalVisible(true);
+      clearInterval(intervalId); // Stop the interval
+    }
+    // Cleanup the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, [timer]);
+
   const navigation = useNavigation();
   const [makiQuantities, setMakiQuantities] = useState({});
 
@@ -70,12 +90,30 @@ const MakiScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Bar tableNumber="3" currentRound={currentRound} timer={timer} />
+
+      <Modal visible={isModalVisible}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={styles.Text}>Time has expired!</Text>
+          <Button
+            title="Return to Start Screen"
+            onPress={() => {
+              setIsModalVisible(false);
+              // Navigate back to the Start Screen
+              navigation.navigate('Start');
+            }}
+          />
+        </View>
+      </Modal>
+
       <TouchableOpacity
-        style={{ marginLeft: 15, marginTop: "10%" }}
+        style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: "10%" }}
         onPress={() => navigation.goBack()}
       >
         <Icon name="ios-arrow-back" size={30} color="black" />
+        <Text style={{ marginLeft: 5, fontSize: 20, fontWeight: 'bold' }}>Return</Text>
       </TouchableOpacity>
+
       <FlatList
         contentContainerStyle={styles.listContainer}
         data={makiData}
@@ -95,6 +133,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: '10%'
   },
   listContainer: {
     flexGrow: 1,
@@ -105,7 +144,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     alignItems: 'center',
     marginBottom: SPACING,
-    marginHorizontal: SPACING,
+    marginHorizontal: SPACING / 2
   },
   image: {
     width: 100,
@@ -131,6 +170,12 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontWeight: 'bold',
   },
+  Text: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 30,
+    marginBottom: 10
+  }
 });
 
 export default MakiScreen;
