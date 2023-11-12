@@ -5,27 +5,27 @@ import { useNavigation } from '@react-navigation/native';
 import Bar from '../utils/Bar';
 import { useAppContext } from '../utils/AppContext';
 
-const maki1 = require("../assets/images/maki/maki1.jpg");
-const maki2 = require("../assets/images/maki/maki2.jpg");
-const maki3 = require("../assets/images/maki/maki3.jpg");
-const maki4 = require("../assets/images/maki/maki4.jpg");
-const maki5 = require("../assets/images/maki/maki5.jpg");
-const maki6 = require("../assets/images/maki/maki6.jpg");
-const maki7 = require("../assets/images/maki/maki7.jpg");
-const maki8 = require("../assets/images/maki/maki8.jpg");
-const maki9 = require("../assets/images/maki/maki9.jpg");
+const nigiri1 = require("../assets/images/nigiri/nigiri1.jpg");
+const nigiri2 = require("../assets/images/nigiri/nigiri2.jpg");
+const nigiri3 = require("../assets/images/nigiri/nigiri3.jpg");
+const nigiri4 = require("../assets/images/nigiri/nigiri4.jpg");
+const nigiri5 = require("../assets/images/nigiri/nigiri5.jpg");
+const nigiri6 = require("../assets/images/nigiri/nigiri6.jpg");
+const nigiri7 = require("../assets/images/nigiri/nigiri7.jpg");
+const nigiri8 = require("../assets/images/nigiri/nigiri8.jpg");
+const nigiri9 = require("../assets/images/nigiri/nigiri9.jpg");
 
 
-const makiData = [
-  { id: 1, name: 'Salmon avocado', image: maki1 },
-  { id: 2, name: 'Tuna avocado', image: maki2 },
-  { id: 3, name: 'Crab avocado', image: maki3 },
-  { id: 4, name: 'Salmon cucumber', image: maki4 },
-  { id: 5, name: 'Salmon cream', image: maki5 },
-  { id: 6, name: 'Spawn', image: maki6 },
-  { id: 7, name: 'Tuna egg', image: maki7 },
-  { id: 8, name: 'Shrimp avocado', image: maki8 },
-  { id: 9, name: 'Tuna cream', image: maki9 },
+const nigiriData = [
+  { id: 1, name: 'Sea bass', image: nigiri1 },
+  { id: 2, name: 'Salmon cream', image: nigiri2 },
+  { id: 3, name: 'Tuna cream', image: nigiri3 },
+  { id: 4, name: 'Double', image: nigiri4 },
+  { id: 5, name: 'Triple', image: nigiri5 },
+  { id: 6, name: 'Mackerel', image: nigiri6 },
+  { id: 7, name: 'Crab', image: nigiri7 },
+  { id: 8, name: 'Maguro', image: nigiri8 },
+  { id: 9, name: 'Flamed salmon', image: nigiri9 },
 ];
 
 const NigiriScreen = () => {
@@ -116,7 +116,7 @@ const NigiriScreen = () => {
 
       <FlatList
         contentContainerStyle={styles.listContainer}
-        data={makiData}
+        data={nigiriData}
         numColumns={3}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
