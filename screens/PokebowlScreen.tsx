@@ -5,27 +5,27 @@ import { useNavigation } from '@react-navigation/native';
 import Bar from '../utils/Bar';
 import { useAppContext } from '../utils/AppContext';
 
-const maki1 = require("../assets/images/maki/maki1.jpg");
-const maki2 = require("../assets/images/maki/maki2.jpg");
-const maki3 = require("../assets/images/maki/maki3.jpg");
-const maki4 = require("../assets/images/maki/maki4.jpg");
-const maki5 = require("../assets/images/maki/maki5.jpg");
-const maki6 = require("../assets/images/maki/maki6.jpg");
-const maki7 = require("../assets/images/maki/maki7.jpg");
-const maki8 = require("../assets/images/maki/maki8.jpg");
-const maki9 = require("../assets/images/maki/maki9.jpg");
+const pokebowl1 = require("../assets/images/pokebowl/pokebowl1.jpg");
+const pokebowl2 = require("../assets/images/pokebowl/pokebowl2.jpg");
+const pokebowl3 = require("../assets/images/pokebowl/pokebowl3.jpg");
+const pokebowl4 = require("../assets/images/pokebowl/pokebowl4.jpg");
+const pokebowl5 = require("../assets/images/pokebowl/pokebowl5.jpg");
+const pokebowl6 = require("../assets/images/pokebowl/pokebowl6.jpg");
+const pokebowl7 = require("../assets/images/pokebowl/pokebowl7.jpg");
+const pokebowl8 = require("../assets/images/pokebowl/pokebowl8.jpg");
+const pokebowl9 = require("../assets/images/pokebowl/pokebowl9.jpg");
 
 
-const makiData = [
-  { id: 1, name: 'Salmon avocado', image: maki1 },
-  { id: 2, name: 'Tuna avocado', image: maki2 },
-  { id: 3, name: 'Crab avocado', image: maki3 },
-  { id: 4, name: 'Salmon cucumber', image: maki4 },
-  { id: 5, name: 'Salmon cream', image: maki5 },
-  { id: 6, name: 'Spawn', image: maki6 },
-  { id: 7, name: 'Tuna egg', image: maki7 },
-  { id: 8, name: 'Shrimp avocado', image: maki8 },
-  { id: 9, name: 'Tuna cream', image: maki9 },
+const pokebowlData = [
+  { id: 1, name: 'Salmon cucumber', image: pokebowl1 },
+  { id: 2, name: 'Tuna avocado', image: pokebowl2 },
+  { id: 3, name: 'Salmon mango', image: pokebowl3 },
+  { id: 4, name: 'Salmon seaweed', image: pokebowl4 },
+  { id: 5, name: 'Salmon rabarber', image: pokebowl5 },
+  { id: 6, name: 'Tuna avocado', image: pokebowl6 },
+  { id: 7, name: 'Edamame salmon', image: pokebowl7 },
+  { id: 8, name: 'Edamame tuna', image: pokebowl8 },
+  { id: 9, name: 'Sesame', image: pokebowl9 },
 ];
 
 const PokebowlScreen = () => {
@@ -116,7 +116,7 @@ const PokebowlScreen = () => {
 
       <FlatList
         contentContainerStyle={styles.listContainer}
-        data={makiData}
+        data={pokebowlData}
         numColumns={3}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}

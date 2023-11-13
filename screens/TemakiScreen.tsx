@@ -5,27 +5,27 @@ import { useNavigation } from '@react-navigation/native';
 import Bar from '../utils/Bar';
 import { useAppContext } from '../utils/AppContext';
 
-const maki1 = require("../assets/images/maki/maki1.jpg");
-const maki2 = require("../assets/images/maki/maki2.jpg");
-const maki3 = require("../assets/images/maki/maki3.jpg");
-const maki4 = require("../assets/images/maki/maki4.jpg");
-const maki5 = require("../assets/images/maki/maki5.jpg");
-const maki6 = require("../assets/images/maki/maki6.jpg");
-const maki7 = require("../assets/images/maki/maki7.jpg");
-const maki8 = require("../assets/images/maki/maki8.jpg");
-const maki9 = require("../assets/images/maki/maki9.jpg");
+const temaki1 = require("../assets/images/temaki/temaki1.jpg");
+const temaki2 = require("../assets/images/temaki/temaki2.jpg");
+const temaki3 = require("../assets/images/temaki/temaki3.jpg");
+const temaki4 = require("../assets/images/temaki/temaki4.jpg");
+const temaki5 = require("../assets/images/temaki/temaki5.jpg");
+const temaki6 = require("../assets/images/temaki/temaki6.jpg");
+const temaki7 = require("../assets/images/temaki/temaki7.jpg");
+const temaki8 = require("../assets/images/temaki/temaki8.jpg");
+const temaki9 = require("../assets/images/temaki/temaki9.jpg");
 
 
 const makiData = [
-  { id: 1, name: 'Salmon avocado', image: maki1 },
-  { id: 2, name: 'Tuna avocado', image: maki2 },
-  { id: 3, name: 'Crab avocado', image: maki3 },
-  { id: 4, name: 'Salmon cucumber', image: maki4 },
-  { id: 5, name: 'Salmon cream', image: maki5 },
-  { id: 6, name: 'Spawn', image: maki6 },
-  { id: 7, name: 'Tuna egg', image: maki7 },
-  { id: 8, name: 'Shrimp avocado', image: maki8 },
-  { id: 9, name: 'Tuna cream', image: maki9 },
+  { id: 1, name: 'Salmon', image: temaki1 },
+  { id: 2, name: 'Salmon sesame', image: temaki2 },
+  { id: 3, name: 'Crab', image: temaki3 },
+  { id: 4, name: 'Red spawn', image: temaki4 },
+  { id: 5, name: 'Orange spawn', image: temaki5 },
+  { id: 6, name: 'Tuna', image: temaki6 },
+  { id: 7, name: 'Shrimp', image: temaki7 },
+  { id: 8, name: 'Crab spawn', image: temaki8 },
+  { id: 9, name: 'Egg', image: temaki9 },
 ];
 
 const TemakiScreen = () => {

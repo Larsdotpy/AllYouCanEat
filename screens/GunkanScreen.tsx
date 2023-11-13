@@ -5,27 +5,27 @@ import { useNavigation } from '@react-navigation/native';
 import Bar from '../utils/Bar';
 import { useAppContext } from '../utils/AppContext';
 
-const maki1 = require("../assets/images/maki/maki1.jpg");
-const maki2 = require("../assets/images/maki/maki2.jpg");
-const maki3 = require("../assets/images/maki/maki3.jpg");
-const maki4 = require("../assets/images/maki/maki4.jpg");
-const maki5 = require("../assets/images/maki/maki5.jpg");
-const maki6 = require("../assets/images/maki/maki6.jpg");
-const maki7 = require("../assets/images/maki/maki7.jpg");
-const maki8 = require("../assets/images/maki/maki8.jpg");
-const maki9 = require("../assets/images/maki/maki9.jpg");
+const gunkan1 = require("../assets/images/gunkan/gunkan1.jpg");
+const gunkan2 = require("../assets/images/gunkan/gunkan2.jpg");
+const gunkan3 = require("../assets/images/gunkan/gunkan3.jpg");
+const gunkan4 = require("../assets/images/gunkan/gunkan4.jpg");
+const gunkan5 = require("../assets/images/gunkan/gunkan5.jpg");
+const gunkan6 = require("../assets/images/gunkan/gunkan6.jpg");
+const gunkan7 = require("../assets/images/gunkan/gunkan7.jpg");
+const gunkan8 = require("../assets/images/gunkan/gunkan8.jpg");
+const gunkan9 = require("../assets/images/gunkan/gunkan9.jpg");
 
 
 const makiData = [
-  { id: 1, name: 'Salmon avocado', image: maki1 },
-  { id: 2, name: 'Tuna avocado', image: maki2 },
-  { id: 3, name: 'Crab avocado', image: maki3 },
-  { id: 4, name: 'Salmon cucumber', image: maki4 },
-  { id: 5, name: 'Salmon cream', image: maki5 },
-  { id: 6, name: 'Spawn', image: maki6 },
-  { id: 7, name: 'Tuna egg', image: maki7 },
-  { id: 8, name: 'Shrimp avocado', image: maki8 },
-  { id: 9, name: 'Tuna cream', image: maki9 },
+  { id: 1, name: 'Eel', image: gunkan1 },
+  { id: 2, name: 'Tuna', image: gunkan2 },
+  { id: 3, name: 'Mackerel', image: gunkan3 },
+  { id: 4, name: 'Seaweed', image: gunkan4 },
+  { id: 5, name: 'Sesame', image: gunkan5 },
+  { id: 6, name: 'Seafood', image: gunkan6 },
+  { id: 7, name: 'Scallop', image: gunkan7 },
+  { id: 8, name: 'Spawn', image: gunkan8 },
+  { id: 9, name: 'Shrimp', image: gunkan9 },
 ];
 
 const GunkanScreen = () => {
