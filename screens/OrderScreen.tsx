@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FlatList, View, StyleSheet, TouchableOpacity, Text, Alert } from "react-native";
+import { useMyContext } from '../utils/MyContext';
 
 interface OrdersScreenProps {
   updateRound: (prevRound: number) => number;
@@ -8,6 +9,7 @@ interface OrdersScreenProps {
 const OrdersScreen: React.FC<OrdersScreenProps> = ({ updateRound }) => {
   const [currentRound, setCurrentRound] = useState<number>(1);
   const [orderPlacedInRound5, setOrderPlacedInRound5] = useState<boolean>(false);
+  const { orders, addItemToList, logList, clearOrders } = useMyContext();
   
   const OrderItem: React.FC<{ orderDetails: string }> = ({ orderDetails }) => {
     return (
@@ -18,24 +20,24 @@ const OrdersScreen: React.FC<OrdersScreenProps> = ({ updateRound }) => {
     );
   };
   
-    const orders = [
-      "Order 1 details",
-      "Order 2 details",
-      "Order 3 details",
-      "Order 4 details",
-      "Order 5 details",
-      "Order 6 details",
-      "Order 7 details",
-      "Order 8 details",
-      "Order 9 details",
-      "Order 10 details",
-      "Order 11 details",
-      "Order 12 details",
-      "Order 13 details",
-      "Order 14 details",
-      "Order 15 details",
-      // Add more orders or retrieve from your data source
-    ];
+    // const orders = [
+    //   "Order 1 details",
+    //   "Order 2 details",
+    //   "Order 3 details",
+    //   "Order 4 details",
+    //   "Order 5 details",
+    //   "Order 6 details",
+    //   "Order 7 details",
+    //   "Order 8 details",
+    //   "Order 9 details",
+    //   "Order 10 details",
+    //   "Order 11 details",
+    //   "Order 12 details",
+    //   "Order 13 details",
+    //   "Order 14 details",
+    //   "Order 15 details",
+    //   // Add more orders or retrieve from your data source
+    // ];
   
     const placeOrderHandler = () => {
       if (currentRound < 5 || (currentRound === 5 && !orderPlacedInRound5)) {
@@ -55,7 +57,11 @@ const OrdersScreen: React.FC<OrdersScreenProps> = ({ updateRound }) => {
                 // Add your logic here
                 // ==> stuur order data naar Kafka topic
                 console.log('Placing the order...');
-  
+                logList();
+
+                // Clear the orders after placing the order
+                clearOrders();
+                
                 // Update the round number (with a maximum of 5)
                 updateRound((prevRound) => {
                   console.log('Previous Round:', prevRound);

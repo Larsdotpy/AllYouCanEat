@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import Bar from '../utils/Bar';
 import { useAppContext } from '../utils/AppContext';
+import { useMyContext } from '../utils/MyContext';
 
 const maki1 = require("../assets/images/maki/maki1.jpg");
 const maki2 = require("../assets/images/maki/maki2.jpg");
@@ -29,6 +30,7 @@ const makiData = [
 ];
 
 const MakiScreen = () => {
+  const { addItemToList, removeItemFromList } = useMyContext();
   const { tableNumber, currentRound, timer, setTimer, setCurrentRound } = useAppContext();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -50,19 +52,26 @@ const MakiScreen = () => {
   const navigation = useNavigation();
   const [makiQuantities, setMakiQuantities] = useState({});
 
-  const incrementQuantity = (id) => {
+  const incrementQuantity = (id, name) => {
     setMakiQuantities((prevQuantities) => {
       const updatedQuantities = { ...prevQuantities };
       updatedQuantities[id] = (updatedQuantities[id] || 0) + 1;
+
+      // Add the item to the list
+      addItemToList(name);
+
       return updatedQuantities;
     });
   };
 
-  const decrementQuantity = (id) => {
+  const decrementQuantity = (id, name) => {
     setMakiQuantities((prevQuantities) => {
       const updatedQuantities = { ...prevQuantities };
       if (updatedQuantities[id] > 0) {
         updatedQuantities[id] -= 1;
+
+        // Remove the item from the list
+        removeItemFromList(name);
       }
       return updatedQuantities;
     });

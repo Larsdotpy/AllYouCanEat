@@ -21,6 +21,7 @@ import PokebowlScreen from './screens/PokebowlScreen';
 import Bar from './utils/Bar';
 import { AppProvider } from './utils/AppContext';
 import { useAppContext } from './utils/AppContext';
+import { MyContextProvider } from './utils/MyContext';
 
 const HomeTabs: React.FC<{ navigation: any }> = ({ navigation }) => {
   const { tableNumber, currentRound, timer, setTimer, setCurrentRound } = useAppContext();
@@ -114,6 +115,7 @@ const HomeTabs: React.FC<{ navigation: any }> = ({ navigation }) => {
 const App: React.FC = () => {
   return (
     <AppProvider>
+      <MyContextProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Start">
         <Stack.Screen name="Start" component={StartScreen} options={{ headerShown: false }} />
@@ -129,6 +131,7 @@ const App: React.FC = () => {
         <Stack.Screen name="PokebowlScreen" component={PokebowlScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
+    </MyContextProvider>
     </AppProvider>
   );
 
